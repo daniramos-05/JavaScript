@@ -6,7 +6,7 @@ body {
 
 main {
   background: #6d4e1fde;
-  max-width: 500px;
+  max-width: 1200px;
   margin: auto;
   padding: 20px;
   border-radius: 8px;
@@ -17,20 +17,9 @@ section {
   margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  margin: 10px 0 5px;
-}
-
-input[type="number"] {
-  background-color: #b19854ba;
-  border: black;
-  width: 100%;
-  padding: 8px;
-}
-
 button {
   padding: 10px;
+  margin-top: 10px;
   width: 100%;
   background: #ffb300;
   color: white;
@@ -43,7 +32,144 @@ button:hover {
   background: #ffb300cc;
 }
 
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-carrito {
+  font-size: 30px;
+  background-color: black;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  transition: 1s;
+
+  &:hover {
+    background-color: gray;
+    transition: 1s;
+  }
+}
+
+#productos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+.producto {
+  background-color: #977a51;
+  width: 20%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px black solid;
+  border-radius: 20px;
+}
+
+.prod-img {
+  width: 100%;
+  height: 50%;
+  object-fit: cover;
+}
+
+.prod-button {
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #67491f;
+  width: 80%;
+  transition: 0.3s;
+}
+
+.prod-button:hover {
+  background-color: #433016;
+}
+
+#carrito-container {
+  display: flex;
+  margin-top: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 50px;
+  align-items: center;
+  flex-direction: column;
+}
+
+#carrito {
+  font-weight: bold;
+}
+
+#carrito-container.oculto {
+  display: none;
+}
+
+#usar-cupon {
+  margin: 10px;
+}
+
 #mensaje {
   font-weight: bold;
-  color: white
+  margin-top: 10px;
+  color: black
+}
+
+#limpiar-btn {
+  font-size: 20px;
+  margin: 10px;
+  width: 30%;
+  height: 50px;
+  background-color: black;
+  border-radius: 20px;
+  transition: 1s;
+
+  &:hover {
+    width: 32%;
+    height: 70px;
+    border: 3px red solid;
+    transition: 1s;
+  }
+}
+
+#comprar-btn {
+  font-size: 20px;
+  margin: 10px;
+  width: 30%;
+  height: 50px;
+  background-color: black;
+  border-radius: 20px;
+  transition: 1s;
+
+  &:hover {
+    width: 32%;
+    height: 70px;
+    border: 3px green solid;
+    transition: 1s;
+  }
+}
+
+#recargar-btn {
+  background-color: #d5b56a;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  height: 40px;
+  border-radius: 20px;
+  transition: 1s;
+  &:hover{
+    width: 22%;
+    height: 50px;
+    transition: 1s;
+    background-color: #f9dd9b;
+  }
+}
+
+.contenedor-recargar-btn {
+  display: flex;
+  justify-content: center;
 }

@@ -1,35 +1,102 @@
-let precioArticulo = 100;
-let saldo = parseFloat(localStorage.getItem("saldo")) || 1000;
-let cupon = parseFloat(localStorage.getItem("cupon")) || 200;
-let articulosComprados = parseInt(localStorage.getItem("articulosComprados")) || 0;
+const productos = [
+  {
+    id: 1,
+    nombre: "Remera",
+    image: "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737206/remera_aw0dxv.jpg",
+    precio: 10000
+  },
+  {
+    id: 2,
+    nombre: "Pantalón",
+    image: "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737207/pantalon_rzw6fa.jpg",
+    precio: 18000
+  },
+  {
+    id: 3,
+    nombre: "Zapatillas",
+    image: "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737207/zapatillas_wrnjuu.webp",
+    precio: 50000
+  },
+  {
+    id: 4,
+    nombre: "Anteojos",
+    image: "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737206/anteojos_euupci.jpg",
+    precio: 3000
+  },
+  {
+    id: 5,
+    nombre: "Reloj", image: "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737646/reloj_s41eap.avif",
+    precio: 20000
+  }
+];
 
-const cantidadInput = document.getElementById("cantidad");
-const usarCuponCheckbox = document.getElementById("usar-cupon");
-const comprarBtn = document.getElementById("comprar-btn");
-const mensaje = document.getElementById("mensaje");
+let saldoInicial = 100000; 
+let saldo = parseFloat(localStorage.getItem("saldo")) || saldoInicial;
+let cupon = parseFloat(localStorage.getItem("cupon")) || 20000;
+let carrito = [];
 
+// DOM
+const productosContainer = document.getElementById("productos-container");
 const spanSaldo = document.getElementById("saldo");
 const spanCupon = document.getElementById("cupon");
-const spanArticulos = document.getElementById("articulos-comprados");
-const spanPrecio = document.getElementById("precio-articulo");
+const mensaje = document.getElementById("mensaje");
+const carritoLista = document.getElementById("carrito");
 
-actualizarDOM();
+const toggleCarritoBtn = document.getElementById("toggle-carrito");
+const carritoContainer = document.getElementById("carrito-container");
+const usarCuponCheckbox = document.getElementById("usar-cupon");
+const comprarBtn = document.getElementById("comprar-btn");
+const limpiarBtn = document.getElementById("limpiar-btn");
+const recargarBtn = document.getElementById("recargar-btn"); // 🔹 nuevo botón
 
-comprarBtn.addEventListener("click", comprarArticulos);
 
-function comprarArticulos() {
-  const cantidad = parseInt(cantidadInput.value);
-  const usarCupon = usarCuponCheckbox.checked;
+// Renderizar tarjetas de productos
+function mostrarProductos() {
+  productosContainer.innerHTML = "";
+  productos.forEach(p => {
+    const card = document.createElement("div");
+    card.classList.add("producto");
+    card.innerHTML = `
+      <h3>${p.nombre}</h3>
+      <img class="prod-img" src="${p.image}" alt="">
+      <p>Precio: $${p.precio}</p>
+      <button class="prod-button" onclick="agregarAlCarrito(${p.id})">Agregar al carrito</button>
+    `;
+    productosContainer.appendChild(card);
+  });
+}
 
-  if (isNaN(cantidad) || cantidad <= 0) {
-    mostrarMensaje("❌ Ingrese una cantidad válida.");
+// Agregar producto al carrito
+function agregarAlCarrito(id) {
+  const producto = productos.find(p => p.id === id);
+  if (producto) {
+    carrito.push(producto);
+    actualizarCarrito();
+    mostrarMensaje(`🛒 ${producto.nombre} agregado al carrito`);
+  }
+}
+
+// Actualizar lista del carrito
+function actualizarCarrito() {
+  carritoLista.innerHTML = "";
+  carrito.forEach((p, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${p.nombre} - $${p.precio}`;
+    carritoLista.appendChild(li);
+  });
+}
+
+// Comprar productos del carrito
+function comprar() {
+  if (carrito.length === 0) {
+    mostrarMensaje("⚠️ El carrito está vacío");
     return;
   }
 
-  let total = cantidad * precioArticulo;
+  let total = carrito.reduce((acc, p) => acc + p.precio, 0);
   let cuponAplicado = 0;
 
-  if (usarCupon && cupon > 0) {
+  if (usarCuponCheckbox.checked && cupon > 0) {
     cuponAplicado = Math.min(cupon, total);
     total -= cuponAplicado;
   }
@@ -41,32 +108,57 @@ function comprarArticulos() {
 
   saldo -= total;
   cupon -= cuponAplicado;
-  articulosComprados += cantidad;
+  carrito = [];
 
   guardarDatos();
-
-  mostrarMensaje(`✅ Compra realizada: ${cantidad} artículo(s). Total pagado: $${total.toFixed(2)}.`);
-
   actualizarDOM();
-
-  cantidadInput.value = "";
+  actualizarCarrito();
+  mostrarMensaje(`✅ Compra realizada. Pagaste $${total} (Cupón usado: $${cuponAplicado}).`);
   usarCuponCheckbox.checked = false;
 }
 
+// Limpiar carrito
+function limpiarCarrito() {
+  carrito = [];
+  actualizarCarrito();
+  mostrarMensaje("🗑️ Carrito limpiado");
+}
+
+// Recargar saldo
+function recargarSaldo() {
+  saldo = saldoInicial; 
+  guardarDatos();
+  actualizarDOM();
+  mostrarMensaje(`💳 Saldo recargado a $${saldo}`);
+}
+
+// Actualizar DOM
 function actualizarDOM() {
   spanSaldo.textContent = saldo.toFixed(2);
   spanCupon.textContent = cupon.toFixed(2);
-  spanArticulos.textContent = articulosComprados;
-  spanPrecio.textContent = precioArticulo.toFixed(2);
 }
 
+// Guardar en localStorage
+function guardarDatos() {
+  localStorage.setItem("saldo", saldo);
+  localStorage.setItem("cupon", cupon);
+}
+
+// Mostrar mensajes
 function mostrarMensaje(texto) {
   mensaje.textContent = texto;
   setTimeout(() => mensaje.textContent = "", 4000);
 }
 
-function guardarDatos() {
-  localStorage.setItem("saldo", saldo);
-  localStorage.setItem("cupon", cupon);
-  localStorage.setItem("articulosComprados", articulosComprados);
-}
+// Eventos
+toggleCarritoBtn.addEventListener("click", () => {
+  carritoContainer.classList.toggle("oculto");
+});
+comprarBtn.addEventListener("click", comprar);
+limpiarBtn.addEventListener("click", limpiarCarrito);
+recargarBtn.addEventListener("click", recargarSaldo);
+
+// Inicializar
+mostrarProductos();
+actualizarDOM();
+actualizarCarrito();

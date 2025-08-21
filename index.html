@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simulador de Compras</title>
   <link rel="stylesheet" href="./css/index.css">
 </head>
+
 <body>
   <main>
-    <h1>Simulador de Compras</h1>
-    
-    <section class="info">
-      <p><strong>Precio por artículo:</strong> $<span id="precio-articulo">100</span></p>
-      <p><strong>Saldo disponible:</strong> $<span id="saldo">1000</span></p>
-      <p><strong>Cupón disponible:</strong> $<span id="cupon">200</span></p>
-    </section>
-
-    <section class="formulario">
-      <label for="cantidad">Cantidad de artículos:</label>
-      <input type="number" id="cantidad" min="1" />
-
+    <div class="top">
+      <h1>Simulador de Compras</h1>
+      <button class="button-carrito" id="toggle-carrito">🛒</button>
+    </div>
+    <div id="carrito-container" class="carrito oculto">
+      <h2>Carrito</h2>
+      <ul id="carrito"></ul>
       <label>
         <input type="checkbox" id="usar-cupon" />
         Usar cupón
       </label>
-
       <button id="comprar-btn">Comprar</button>
+      <button id="limpiar-btn">Limpiar carrito</button>
+      <div id="mensaje"></div>
+    </div>
+    <section class="info">
+      <p><strong>Saldo disponible:</strong> $<span id="saldo">100000</span></p>
+      <p><strong>Cupón disponible:</strong> $<span id="cupon">20000</span></p>
+      <div class="contenedor-recargar-btn">
+        <button id="recargar-btn">Recargar saldo</button>
+      </div>
     </section>
 
-    <section id="mensaje"></section>
-    <section>
-      <h3>Artículos comprados: <span id="articulos-comprados">0</span></h3>
-    </section>
+    <div id="productos-container" class="productos"></div>
+
   </main>
 
   <script src="./js/app.js"></script>
 </body>
+
 </html>
