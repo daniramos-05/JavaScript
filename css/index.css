@@ -88,6 +88,26 @@ button:hover {
   background-color: #433016;
 }
 
+.categorias {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-btn {
+  background-color: #000000;
+  color: white;
+  width: 80px;
+  display: flex;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  transition: 1s;
+  &:hover{
+    transition: 1s;
+    background-color: gray;
+  }
+}
+
 #carrito-container {
   display: flex;
   margin-top: 20px;
@@ -161,7 +181,8 @@ button:hover {
   height: 40px;
   border-radius: 20px;
   transition: 1s;
-  &:hover{
+
+  &:hover {
     width: 22%;
     height: 50px;
     transition: 1s;

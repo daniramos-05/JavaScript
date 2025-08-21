@@ -1,0 +1,79 @@
+[
+    {
+        "id": 1,
+        "nombre": "Remera",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737206/remera_aw0dxv.jpg",
+        "precio": 10000,
+        "categoria": "superior"
+    },
+    {
+        "id": 2,
+        "nombre": "Pantalón",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737207/pantalon_rzw6fa.jpg",
+        "precio": 20000,
+        "categoria": "inferior"
+    },
+    {
+        "id": 3,
+        "nombre": "Zapatillas",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737207/zapatillas_wrnjuu.webp",
+        "precio": 55000,
+        "categoria": "calzado"
+    },
+    {
+        "id": 4,
+        "nombre": "Campera",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755781184/campera_zmgbth.jpg",
+        "precio": 150000,
+        "categoria": "superior"
+    },
+    {
+        "id": 5,
+        "nombre": "Anteojos",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737206/anteojos_euupci.jpg",
+        "precio": 8000,
+        "categoria": "accesorios"
+    },
+    {
+        "id": 6,
+        "nombre": "Reloj",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755737646/reloj_s41eap.avif",
+        "precio": 40000,
+        "categoria": "accesorios"
+    },
+    {
+        "id": 7,
+        "nombre": "Pantalón",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755781833/pantalon_carhartt3_sbxth0.webp",
+        "precio": 45000,
+        "categoria": "inferior"
+    },
+    {
+        "id": 8,
+        "nombre": "Campera",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755781826/campera_raw_denim_h8r2rd.webp",
+        "precio": 50000,
+        "categoria": "superior"
+    },
+    {
+        "id": 9,
+        "nombre": "Pantalón",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755782067/pantalon_raw_denim_c22kd4.jpg",
+        "precio": 30000,
+        "categoria": "inferior"
+    },
+    {
+        "id": 10,
+        "nombre": "Borsegos",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755781827/timberland_pgunws.avif",
+        "precio": 100000,
+        "categoria": "calzado"
+    },
+    {
+        "id": 11,
+        "nombre": "Pantalón",
+        "image": "https://res.cloudinary.com/dwfbrcxgu/image/upload/v1755781826/pantalon_carhartt_l6qtdo.webp",
+        "precio": 45000,
+        "categoria": "inferior"
+    }
+]
