@@ -1,7 +1,7 @@
-let saldoInicial = 200000; 
+let saldoInicial = 1000000;
 let saldo = parseFloat(localStorage.getItem("saldo")) || saldoInicial;
 let cupon = parseFloat(localStorage.getItem("cupon")) || 20000;
-let carrito = JSON.parse(localStorage.getItem("carrito")) || []; 
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 const productosContainer = document.getElementById("productos-container");
 const spanSaldo = document.getElementById("saldo");
@@ -15,8 +15,14 @@ const usarCuponCheckbox = document.getElementById("usar-cupon");
 const comprarBtn = document.getElementById("comprar-btn");
 const limpiarBtn = document.getElementById("limpiar-btn");
 const recargarBtn = document.getElementById("recargar-btn");
+const menuToggle = document.getElementById("menu-toggle");
+const menuLinks = document.getElementById("menu-links");
 
-let productos = []; 
+menuToggle.addEventListener("click", () => {
+  menuLinks.classList.toggle("active");
+});
+
+let productos = [];
 
 async function cargarProductos() {
   try {
@@ -46,7 +52,17 @@ function mostrarProductos() {
 function agregarAlCarrito(id) {
   const producto = productos.find(p => p.id === id);
   if (producto) {
-    carrito.push(producto);
+
+    const itemEnCarrito = carrito.find(p => p.id === id);
+
+    if (itemEnCarrito) {
+
+      itemEnCarrito.cantidad++;
+    } else {
+
+      carrito.push({ ...producto, cantidad: 1 });
+    }
+
     guardarDatos();
     actualizarCarrito();
     mostrarMensaje(`🛒 ${producto.nombre} agregado al carrito`);
@@ -55,11 +71,31 @@ function agregarAlCarrito(id) {
 
 function actualizarCarrito() {
   carritoLista.innerHTML = "";
+
   carrito.forEach((p) => {
     const li = document.createElement("li");
-    li.textContent = `${p.nombre} - $${p.precio}`;
+    const subtotal = p.precio * p.cantidad;
+
+    li.innerHTML = `
+      ${p.nombre} (x${p.cantidad}) - $${subtotal}
+      <button class="btn-carrito" onclick="cambiarCantidad(${p.id}, -1)">-</button>
+      <button class="btn-carrito" onclick="cambiarCantidad(${p.id}, 1)">+</button>
+    `;
+
     carritoLista.appendChild(li);
   });
+}
+
+function cambiarCantidad(id, cambio) {
+  const item = carrito.find(p => p.id === id);
+  if (item) {
+    item.cantidad += cambio;
+    if (item.cantidad <= 0) {
+      carrito = carrito.filter(p => p.id !== id);
+    }
+    guardarDatos();
+    actualizarCarrito();
+  }
 }
 
 function comprar() {
@@ -68,7 +104,7 @@ function comprar() {
     return;
   }
 
-  let total = carrito.reduce((acc, p) => acc + p.precio, 0);
+  let total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
   let cuponAplicado = 0;
 
   if (usarCuponCheckbox.checked && cupon > 0) {
@@ -91,6 +127,7 @@ function comprar() {
   mostrarMensaje(`✅ Compra realizada. Pagaste $${total} (Cupón usado: $${cuponAplicado}).`);
   usarCuponCheckbox.checked = false;
 }
+
 
 function mostrarProductos(filtro = "todos") {
   productosContainer.innerHTML = "";
@@ -142,7 +179,7 @@ function limpiarCarrito() {
 }
 
 function recargarSaldo() {
-  saldo = saldoInicial; 
+  saldo = saldoInicial;
   guardarDatos();
   actualizarDOM();
   mostrarMensaje(`💳 Saldo recargado a $${saldo}`);
@@ -156,7 +193,7 @@ function actualizarDOM() {
 function guardarDatos() {
   localStorage.setItem("saldo", saldo);
   localStorage.setItem("cupon", cupon);
-  localStorage.setItem("carrito", JSON.stringify(carrito)); 
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
 function mostrarMensaje(texto) {
@@ -171,6 +208,6 @@ comprarBtn.addEventListener("click", comprar);
 limpiarBtn.addEventListener("click", limpiarCarrito);
 recargarBtn.addEventListener("click", recargarSaldo);
 
-cargarProductos(); 
+cargarProductos();
 actualizarDOM();
 actualizarCarrito();

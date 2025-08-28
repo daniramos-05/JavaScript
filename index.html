@@ -12,15 +12,20 @@
   <main>
     <div class="top">
       <h1>Simulador de Compras</h1>
-      <nav class="categorias">
+
+      <div class="icono-menu" id="menu-toggle">☰</div>
+
+      <nav class="categorias" id="menu-links">
         <button class="nav-btn" data-categoria="superior">Superior</button>
         <button class="nav-btn" data-categoria="inferior">Inferior</button>
         <button class="nav-btn" data-categoria="calzado">Calzado</button>
         <button class="nav-btn" data-categoria="accesorios">Accesorios</button>
         <button class="nav-btn" data-categoria="todos">Todos</button>
       </nav>
+
       <button class="button-carrito" id="toggle-carrito">🛒</button>
     </div>
+
     <div id="carrito-container" class="carrito oculto">
       <h2>Carrito</h2>
       <ul id="carrito"></ul>
